@@ -10,7 +10,6 @@ readonly class Cli
 
     public function __construct(Router $router) {
         $this->router = $router;
-        echo "Cli Object is constructed\n";
     }
 
     /**
@@ -18,5 +17,6 @@ readonly class Cli
      */
     public function run(): void {
         $controller = $this->router->route();
+        $controller->run();
     }
 }

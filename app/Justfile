@@ -1,2 +1,5 @@
 validate:
-    phpstan -c phpstan.neon
+    phpstan analyse -c phpstan.neon
+
+run +args:
+    php src/main.php {{args}}

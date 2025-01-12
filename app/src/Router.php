@@ -35,12 +35,12 @@ readonly class Router
     public function route(): IController {
         return match ($this->numberOfArgs) {
             2 => match ($this->args[1]) {
-                "-i" | "--interactive" => new InteractiveController(),
-                "-h" | "--help" => new HelpMessageController(),
+                "-i", "--interactive" => new InteractiveController(),
+                '-h', '--help' => new HelpMessageController(),
                 default => new FileController(file_path: $this->args[1]),
             },
             3 => match ($this->args[1]) {
-                "-o" | "--oneliner" => new OnelinerController(src: $this->args[2]),
+                "-o", "--oneliner" => new OnelinerController(src: $this->args[2]),
                 default => new HelpMessageController(),
             },
             default => new HelpMessageController(),
