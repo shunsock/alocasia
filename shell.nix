@@ -3,7 +3,7 @@
 pkgs.mkShell {
   buildInputs = [
     # PHP 8.3 with mbstring enabled
-    (pkgs.php83.withExtensions (extensions: with extensions.all; [ mbstring ]))
+    (pkgs.php83.withExtensions (extensions: with extensions.all; [ mbstring ctype ]))
     # Composer
     pkgs.php83.packages.composer
 
