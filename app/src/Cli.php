@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Alocasia;
 
-class Cli
+readonly class Cli
 {
-    public function __construct() {
+    private Router $router;
+
+    public function __construct(Router $router) {
+        $this->router = $router;
         echo "Cli Object is constructed\n";
     }
 
@@ -14,6 +17,6 @@ class Cli
      * @return void
      */
     public function run(): void {
-        echo "Cli is running\n";
+        $controller = $this->router->route();
     }
 }
