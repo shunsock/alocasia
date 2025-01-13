@@ -10,6 +10,7 @@ use Alocasia\Interpreter\Scanner\ScannerException;
 use Alocasia\Interpreter\Token\{DoubleEqual,
     DoubleSlash,
     Equal,
+    Minus,
     Plus,
     Asterisk,
     LessThan,
@@ -157,5 +158,55 @@ class ScannerTest extends TestCase
         $this->assertInstanceOf(DoubleEqual::class, $tokens[1]);
         $this->assertInstanceOf(Slash::class, $tokens[2]);
         $this->assertInstanceOf(DoubleSlash::class, $tokens[3]);
+    }
+
+    /**
+     * @throws ScannerException
+     */
+    public function testBinaryExpressionProgram(): void
+    {
+        $scanner = new Scanner("1 -2 - 3.0 *");
+        $tokens = $scanner->scan();
+
+        $this->assertCount(5, $tokens);
+
+        $this->assertInstanceOf(IntegerLiteral::class, $tokens[0]);
+        $this->assertSame(1, $tokens[0]->value);
+        $this->assertInstanceOf(IntegerLiteral::class, $tokens[1]);
+        $this->assertSame(-2, $tokens[1]->value);
+        $this->assertInstanceOf(Minus::class, $tokens[2]);
+        $this->assertInstanceOf(FloatLiteral::class, $tokens[3]);
+        $this->assertSame(3.0, $tokens[3]->value);
+        $this->assertInstanceOf(Asterisk::class, $tokens[4]);
+    }
+
+    /**
+     * @throws ScannerException
+     */
+    public function testConditionalProgram(): void
+    {
+        $scanner = new Scanner("if { 0 } { 1 print } { 0 print }");
+        $tokens = $scanner->scan();
+
+        $this->assertCount(12, $tokens);
+
+        $this->assertInstanceOf(ConditionalBranch::class, $tokens[0]);
+        // {0}
+        $this->assertInstanceOf(LeftBrace::class, $tokens[1]);
+        $this->assertInstanceOf(IntegerLiteral::class, $tokens[2]);
+        $this->assertSame(0, $tokens[2]->value);
+        $this->assertInstanceOf(RightBrace::class, $tokens[3]);
+        // {1 print}
+        $this->assertInstanceOf(LeftBrace::class, $tokens[4]);
+        $this->assertInstanceOf(IntegerLiteral::class, $tokens[5]);
+        $this->assertSame(1, $tokens[5]->value);
+        $this->assertInstanceOf(BuiltinFunction::class, $tokens[6]);
+        $this->assertInstanceOf(RightBrace::class, $tokens[7]);
+        // {0 print}
+        $this->assertInstanceOf(LeftBrace::class, $tokens[8]);
+        $this->assertInstanceOf(IntegerLiteral::class, $tokens[9]);
+        $this->assertSame(0, $tokens[9]->value);
+        $this->assertInstanceOf(BuiltinFunction::class, $tokens[10]);
+        $this->assertInstanceOf(RightBrace::class, $tokens[11]);
     }
 }
