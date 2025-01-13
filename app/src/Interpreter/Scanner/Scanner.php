@@ -52,7 +52,6 @@ class Scanner
             if (empty($characters))  break;
 
             $firstCharacter = array_shift($characters);
-            print_r($firstCharacter);
 
             // 改行
             if ($firstCharacter === '\n') {
@@ -170,7 +169,6 @@ class Scanner
                         $this->position,
                     );
                 } else if (ctype_digit($nextCharacter)) {
-                    echo "Detect Negative number\n";
                     // - 文字の処理
                     $buffer .= $firstCharacter;
                     $this->position++;
@@ -178,7 +176,6 @@ class Scanner
                     $isFloat = false;
                     $firstCharacter = array_shift($characters);
                     while (true) {
-                        echo $firstCharacter . "\n";
                         if (!ctype_digit($firstCharacter) && $firstCharacter != '.') {
                             throw new ScannerException(
                                 source_code_line: $this->line,
@@ -210,7 +207,6 @@ class Scanner
                             }
                             // bufferをクリア
                             $buffer = '';
-                            echo "buffer cleared\n";
                             break;
                         }
                         $this->position++;
@@ -269,9 +265,10 @@ class Scanner
             }
             // identifier: 関数名・制御構文
             if (ctype_alpha($firstCharacter)) {
-                while (ctype_alpha($firstCharacter)) {
+                while (preg_match('/[a-zA-Z_]/', $firstCharacter)) {
                     $buffer .= $firstCharacter;
-                    if (ctype_space($characters[0])) {
+                    $isSpace = isset($characters[0]) && trim($characters[0]) === "";
+                    if ($isSpace || count($characters) === 0) {
                         $tokens[] = $this->identifyToken($buffer);
                         // bufferをクリア
                         $buffer = '';
@@ -310,7 +307,7 @@ class Scanner
             );
         }
 
-        if (ctype_alpha($buffer)) {
+        if (preg_match('/[a-zA-Z_]+/', $buffer)) {
             return new Variable(
                 $this->line,
                 $this->position,

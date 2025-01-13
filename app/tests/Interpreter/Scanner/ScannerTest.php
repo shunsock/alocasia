@@ -74,20 +74,20 @@ class ScannerTest extends TestCase
     /**
      * @throws ScannerException
      */
-//    public function testKeywordsAndBuiltinFunctions(): void
-//    {
-//        $scanner = new Scanner("if loop print print_ascii_str");
-//        $tokens = $scanner->scan();
-//
-//        $this->assertCount(4, $tokens);
-//
-//        $this->assertInstanceOf(ConditionalBranch::class, $tokens[0]);
-//        $this->assertInstanceOf(Loop::class, $tokens[1]);
-//        $this->assertInstanceOf(BuiltinFunction::class, $tokens[2]);
-//        $this->assertSame("print", $tokens[2]->name);
-//        $this->assertInstanceOf(BuiltinFunction::class, $tokens[3]);
-//        $this->assertSame("print_ascii_str", $tokens[3]->name);
-//    }
+    public function testKeywordsAndBuiltinFunctions(): void
+    {
+        $scanner = new Scanner("if loop print print_ascii_str");
+        $tokens = $scanner->scan();
+
+        $this->assertCount(4, $tokens);
+
+        $this->assertInstanceOf(ConditionalBranch::class, $tokens[0]);
+        $this->assertInstanceOf(Loop::class, $tokens[1]);
+        $this->assertInstanceOf(BuiltinFunction::class, $tokens[2]);
+        $this->assertSame("print", $tokens[2]->name);
+        $this->assertInstanceOf(BuiltinFunction::class, $tokens[3]);
+        $this->assertSame("print_ascii_str", $tokens[3]->name);
+    }
 //
 //    /**
 //     * @throws ScannerException
