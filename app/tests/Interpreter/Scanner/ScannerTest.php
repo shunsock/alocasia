@@ -46,7 +46,7 @@ class ScannerTest extends TestCase
     /**
      * @throws ScannerException
      */
-    public function testPositiveIntegerAndFloatLiterals(): void
+    public function testPositiveNumberLiterals(): void
     {
         $scanner = new Scanner("42 3.14");
         $tokens = $scanner->scan();
@@ -60,7 +60,19 @@ class ScannerTest extends TestCase
     /**
      * @throws ScannerException
      */
-    public function testNegativeIntegerAndFloatLiterals(): void
+    public function testAssertInvalidPositiveNumberLiteral(): void
+    {
+        $this->expectException(ScannerException::class);
+        $this->expectExceptionMessage("数値リテラルに予期しない文字が読み込まれました. 読み込まれた文字: a");
+
+        $scanner = new Scanner("4a2");
+        $scanner->scan();
+    }
+
+    /**
+     * @throws ScannerException
+     */
+    public function testNegativeNumberLiteral(): void
     {
         $scanner = new Scanner("-42 -3.14");
         $tokens = $scanner->scan();
@@ -70,6 +82,18 @@ class ScannerTest extends TestCase
         $this->assertSame(-42, $tokens[0]->value);
         $this->assertInstanceOf(FloatLiteral::class, $tokens[1]);
         $this->assertSame(-3.14, $tokens[1]->value);
+    }
+
+    /**
+     * @throws ScannerException
+     */
+    public function testAssertInvalidNegativeNumberLiteral(): void
+    {
+        $this->expectException(ScannerException::class);
+        $this->expectExceptionMessage("数値リテラルに予期しない文字が読み込まれました. 読み込まれた文字: a");
+
+        $scanner = new Scanner("-4a2");
+        $scanner->scan();
     }
 
     /**
@@ -116,9 +140,7 @@ class ScannerTest extends TestCase
         $this->expectExceptionMessage("プログラムで使用できない文字が含まれています: $");
 
         $scanner = new Scanner("42 $");
-        $token = $scanner->scan();
-        print_r($token);
-
+        $scanner->scan();
     }
 
     /**
