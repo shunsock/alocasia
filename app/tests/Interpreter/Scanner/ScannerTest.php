@@ -88,24 +88,24 @@ class ScannerTest extends TestCase
         $this->assertInstanceOf(BuiltinFunction::class, $tokens[3]);
         $this->assertSame("print_ascii_str", $tokens[3]->name);
     }
-//
-//    /**
-//     * @throws ScannerException
-//     */
-//    public function testVariableNames(): void
-//    {
-//        $scanner = new Scanner("variable_name anotherVariable");
-//        $tokens = $scanner->scan();
-//
-//        $this->assertCount(2, $tokens);
-//
-//        $this->assertInstanceOf(Variable::class, $tokens[0]);
-//        $this->assertSame("variable_name", $tokens[0]->name);
-//
-//        $this->assertInstanceOf(Variable::class, $tokens[1]);
-//        $this->assertSame("anotherVariable", $tokens[1]->name);
-//    }
-//
+
+    /**
+     * @throws ScannerException
+     */
+    public function testVariableNames(): void
+    {
+        $scanner = new Scanner("variable_name anotherVariable");
+        $tokens = $scanner->scan();
+
+        $this->assertCount(2, $tokens);
+
+        $this->assertInstanceOf(Variable::class, $tokens[0]);
+        $this->assertSame("variable_name", $tokens[0]->name);
+
+        $this->assertInstanceOf(Variable::class, $tokens[1]);
+        $this->assertSame("anotherVariable", $tokens[1]->name);
+    }
+
 //    /**
 //     * @throws ScannerException
 //     */
