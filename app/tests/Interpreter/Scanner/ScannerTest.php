@@ -7,9 +7,9 @@ namespace Interpreter\Scanner;
 use Alocasia\Interpreter\Scanner\Scanner;
 use PHPUnit\Framework\TestCase;
 use Alocasia\Interpreter\Scanner\ScannerException;
-use Alocasia\Interpreter\Token\{
-    DoubleEqual,
+use Alocasia\Interpreter\Token\{DoubleEqual,
     DoubleSlash,
+    Equal,
     Plus,
     Asterisk,
     LessThan,
@@ -18,11 +18,11 @@ use Alocasia\Interpreter\Token\{
     RightBrace,
     IntegerLiteral,
     FloatLiteral,
+    Slash,
     Variable,
     BuiltinFunction,
     ConditionalBranch,
-    Loop
-};
+    Loop};
 
 class ScannerTest extends TestCase
 {
@@ -121,17 +121,19 @@ class ScannerTest extends TestCase
 
     }
 
-//    /**
-//     * @throws ScannerException
-//     */
-//    public function testMultiCharacterTokens(): void
-//    {
-//        $scanner = new Scanner("== //");
-//        $tokens = $scanner->scan();
-//
-//        $this->assertCount(2, $tokens);
-//
-//        $this->assertInstanceOf(DoubleEqual::class, $tokens[0]);
-//        $this->assertInstanceOf(DoubleSlash::class, $tokens[1]);
-//    }
+    /**
+     * @throws ScannerException
+     */
+    public function testMultiCharacterTokens(): void
+    {
+        $scanner = new Scanner("= == / //");
+        $tokens = $scanner->scan();
+
+        $this->assertCount(4, $tokens);
+
+        $this->assertInstanceOf(Equal::class, $tokens[0]);
+        $this->assertInstanceOf(DoubleEqual::class, $tokens[1]);
+        $this->assertInstanceOf(Slash::class, $tokens[2]);
+        $this->assertInstanceOf(DoubleSlash::class, $tokens[3]);
+    }
 }
