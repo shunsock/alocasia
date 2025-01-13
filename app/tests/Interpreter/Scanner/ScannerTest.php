@@ -68,6 +68,7 @@ class ScannerTest extends TestCase
         $this->assertCount(2, $tokens);
         $this->assertInstanceOf(IntegerLiteral::class, $tokens[0]);
         $this->assertSame(-42, $tokens[0]->value);
+        $this->assertInstanceOf(FloatLiteral::class, $tokens[1]);
         $this->assertSame(-3.14, $tokens[1]->value);
     }
 
@@ -106,18 +107,20 @@ class ScannerTest extends TestCase
         $this->assertSame("anotherVariable", $tokens[1]->name);
     }
 
-//    /**
-//     * @throws ScannerException
-//     */
-//    public function testUnexpectedCharacters(): void
-//    {
-//        $this->expectException(ScannerException::class);
-//        $this->expectExceptionMessage("予期しない文字が読み込まれました");
-//
-//        $scanner = new Scanner("42 $");
-//        $scanner->scan();
-//    }
-//
+    /**
+     * @throws ScannerException
+     */
+    public function testUnexpectedCharacters(): void
+    {
+        $this->expectException(ScannerException::class);
+        $this->expectExceptionMessage("プログラムで使用できない文字が含まれています: $");
+
+        $scanner = new Scanner("42 $");
+        $token = $scanner->scan();
+        print_r($token);
+
+    }
+
 //    /**
 //     * @throws ScannerException
 //     */

@@ -277,7 +277,13 @@ class Scanner
                     $this->position++;
                     $firstCharacter = array_shift($characters);
                 }
+                continue;
             }
+            throw new ScannerException(
+                source_code_line: $this->line,
+                source_code_position: $this->position,
+                message: "プログラムで使用できない文字が含まれています: " . $firstCharacter
+            );
         }
         return $tokens;
     }
