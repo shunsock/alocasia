@@ -29,7 +29,6 @@ class Scanner
     private int $line = 0;
     private int $position = 0;
 
-    private const array Keywords = ['if', 'loop'];
     private const array BuiltinFunctions = ['print', 'print_ascii_str'];
 
     /**
@@ -292,17 +291,17 @@ class Scanner
      * @throws ScannerException
      */
     private function identifyToken(string $buffer): Token {
-        if (in_array($buffer, self::Keywords)) {
-            return match ($buffer) {
-                "if" => new ConditionalBranch(
-                    line: $this->line,
-                    position: $this->position,
-                ),
-                "loop" => new Loop(
-                    line: $this->line,
-                    position: $this->position,
-                )
-            };
+        if ($buffer === "if") {
+            return new ConditionalBranch(
+                line: $this->line,
+                position: $this->position,
+            );
+        }
+        if ($buffer === "loop") {
+            return new Loop(
+                line: $this->line,
+                position: $this->position,
+            );
         }
 
         if (in_array($buffer, self::BuiltinFunctions)) {
