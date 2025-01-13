@@ -52,6 +52,7 @@ class Scanner
             if (empty($characters))  break;
 
             $firstCharacter = array_shift($characters);
+            print_r($firstCharacter);
 
             // 改行
             if ($firstCharacter === '\n') {
@@ -59,7 +60,8 @@ class Scanner
                 continue;
             }
             // スペース
-            if (ctype_space($firstCharacter)) {
+            $isSpace = trim($firstCharacter) === "";
+            if ($isSpace) {
                 $this->position++;
                 continue;
             }
@@ -135,6 +137,7 @@ class Scanner
                 $this->position += 2;
                 continue;
             }
+            // /: 除算, //: 整数除算
             if ($firstCharacter === '/') {
                 $nextCharacter = array_shift($characters);
                 if ($nextCharacter === '/') {
@@ -158,6 +161,7 @@ class Scanner
                 continue;
             }
             // たくさん見ないとわからない
+            // NegativeNumber: -1, -3.14
             if ($firstCharacter === '-') {
                 $nextCharacter = $characters[0];
                 if (ctype_space($nextCharacter)) {
@@ -166,6 +170,7 @@ class Scanner
                         $this->position,
                     );
                 } else if (ctype_digit($nextCharacter)) {
+                    echo "Detect Negative number\n";
                     // - 文字の処理
                     $buffer .= $firstCharacter;
                     $this->position++;
@@ -173,6 +178,7 @@ class Scanner
                     $isFloat = false;
                     $firstCharacter = array_shift($characters);
                     while (true) {
+                        echo $firstCharacter . "\n";
                         if (!ctype_digit($firstCharacter) && $firstCharacter != '.') {
                             throw new ScannerException(
                                 source_code_line: $this->line,
@@ -180,11 +186,15 @@ class Scanner
                                 message: "数値リテラルに予期しない文字が読み込まれました. 読み込まれた文字: " . $firstCharacter
                             );
                         }
+
                         $buffer .= $firstCharacter;
+
                         if ($firstCharacter === '.') {
                             $isFloat = true;
                         }
-                        if (ctype_space($characters[0])) {
+
+                        $isSpace = isset($characters[0]) && trim($characters[0]) === "";
+                        if ($isSpace || count($characters) === 0) {
                             if ($isFloat) {
                                 $tokens[] = new FloatLiteral(
                                     $this->line,
@@ -199,7 +209,8 @@ class Scanner
                                 );
                             }
                             // bufferをクリア
-                            $buffer .= '';
+                            $buffer = '';
+                            echo "buffer cleared\n";
                             break;
                         }
                         $this->position++;
@@ -212,7 +223,9 @@ class Scanner
                         message: "予期しない文字が読み込まれました. -の後は数値か空白が期待されます. 読み込まれた文字: " . $nextCharacter
                     );
                 }
+                continue;
             }
+            // PositiveNumber: 0, 1, 3.14
             if (ctype_digit($firstCharacter)) {
                 $isFloat = false;
                 while (true) {
@@ -229,7 +242,9 @@ class Scanner
                     if ($firstCharacter === '.') {
                         $isFloat = true;
                     }
-                    if (ctype_space($characters[0])) {
+                    // スペースか最終文字
+                    $isSpace = isset($characters[0]) && trim($characters[0]) === "";
+                    if ($isSpace || count($characters) === 0) {
                         if ($isFloat) {
                             $tokens[] = new FloatLiteral(
                                 $this->line,
@@ -244,20 +259,22 @@ class Scanner
                             );
                         }
                         // bufferをクリア
-                        $buffer .= '';
+                        $buffer = '';
                         break;
                     }
                     $this->position++;
                     $firstCharacter = array_shift($characters);
                 }
+                continue;
             }
+            // identifier: 関数名・制御構文
             if (ctype_alpha($firstCharacter)) {
                 while (ctype_alpha($firstCharacter)) {
                     $buffer .= $firstCharacter;
                     if (ctype_space($characters[0])) {
                         $tokens[] = $this->identifyToken($buffer);
                         // bufferをクリア
-                        $buffer .= '';
+                        $buffer = '';
                         break;
                     }
                     $this->position++;
