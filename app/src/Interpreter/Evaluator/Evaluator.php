@@ -13,6 +13,7 @@ use Alocasia\Interpreter\Token\FloatLiteral;
 use Alocasia\Interpreter\Token\IntegerLiteral;
 use Alocasia\Interpreter\Token\Minus;
 use Alocasia\Interpreter\Token\Plus;
+use Alocasia\Interpreter\Token\Slash;
 use Alocasia\Interpreter\Token\Token;
 use Alocasia\Interpreter\Token\Variable;
 
@@ -62,6 +63,7 @@ class Evaluator
             Plus::class => EvaluatorOfAddition::evaluate($this),
             Minus::class => EvaluatorOfSubtraction::evaluate($this),
             Asterisk::class => EvaluatorOfMultiplication::evaluate($this),
+            Slash::class => EvaluatorOfDivision::evaluate($this),
             default => $this,
         };
 
