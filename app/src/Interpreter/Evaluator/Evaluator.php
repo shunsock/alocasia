@@ -64,13 +64,13 @@ class Evaluator
     /**
      * @throws EvaluatorException
      */
-    private function _evaluateAlocasiaBlock(): void
+    public function evaluateAlocasiaBlock(): void
     {
-        $alocasia_block_token = array_shift($this->tokens);
-        if ($alocasia_block_token instanceof AlocasiaBlock === false) {
+        $alocasia_block = array_shift($this->stack);
+        if ($alocasia_block instanceof AlocasiaBlock === false) {
             throw new EvaluatorException(
-                source_code_line: $alocasia_block_token->line,
-                source_code_position: $alocasia_block_token->position,
+                source_code_line: 0,
+                source_code_position: 0,
                 message: "予期しないエラーが発生しました",
             );
         } else {
@@ -80,7 +80,7 @@ class Evaluator
                 // stackも共有
                 stack: $this->stack,
                 // tokenはBlockの持つtoken
-                tokens: $alocasia_block_token->tokens,
+                tokens: $alocasia_block->tokens,
             );
             $block_evaluator->evaluate();
 
