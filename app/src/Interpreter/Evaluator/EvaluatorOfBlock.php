@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Alocasia\Interpreter\Evaluator;
 
-use Alocasia\Interpreter\Evaluator\AlocasiaBlock\AlocasiaBlock;
+use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Token\Block;
 
 class EvaluatorOfBlock implements IEvaluator

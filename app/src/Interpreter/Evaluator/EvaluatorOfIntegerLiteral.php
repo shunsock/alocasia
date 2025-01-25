@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Alocasia\Interpreter\Evaluator;
 
-use Alocasia\Interpreter\Evaluator\AlocasiaObject\AlocasiaObject;
-use Alocasia\Interpreter\Evaluator\AlocasiaObject\AlocasiaObjectType;
+use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
+use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Token\IntegerLiteral;
 
 class EvaluatorOfIntegerLiteral implements IEvaluator

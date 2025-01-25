@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alocasia\Interpreter\Evaluator\AlocasiaObject;
+namespace Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject;
 
 enum AlocasiaObjectType
 {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Interpreter\Evaluator;
 
-use Alocasia\Interpreter\Evaluator\AlocasiaObject\AlocasiaObject;
-use Alocasia\Interpreter\Evaluator\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
 use Alocasia\Interpreter\Evaluator\EvaluatorOfIdentifier;
+use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
+use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Token\Block;
 use Alocasia\Interpreter\Token\Equal;
 use Alocasia\Interpreter\Token\IntegerLiteral;

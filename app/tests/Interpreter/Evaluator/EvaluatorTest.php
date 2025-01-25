@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Interpreter\Evaluator;
 
-use Alocasia\Interpreter\Evaluator\AlocasiaBlock\AlocasiaBlock;
-use Alocasia\Interpreter\Evaluator\AlocasiaObject\AlocasiaObject;
-use Alocasia\Interpreter\Evaluator\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
+use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
+use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
+use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Token\IntegerLiteral;
 use PHPUnit\Framework\TestCase;
 
