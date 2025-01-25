@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Alocasia\Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\AlocasiaObject\AlocasiaObject;
+use Alocasia\Interpreter\Token\FloatLiteral;
 use Alocasia\Interpreter\Token\IntegerLiteral;
 use Alocasia\Interpreter\Token\Token;
 
@@ -49,6 +50,7 @@ class Evaluator
     {
         $evaluator = match (get_class($this->tokens[0])) {
             IntegerLiteral::class => EvaluatorOfIntegerLiteral::evaluate($this),
+            FloatLiteral::class => EvaluatorOfFloatLiteral::evaluate($this),
             default => $this,
         };
 
