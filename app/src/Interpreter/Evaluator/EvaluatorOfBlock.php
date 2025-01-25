@@ -31,6 +31,10 @@ class EvaluatorOfBlock implements IEvaluator
 
     private static function createAlocasiaBlock(Block $token): AlocasiaBlock
     {
-        return new AlocasiaBlock($token->tokens);
+        return new AlocasiaBlock(
+            line: $token->line,
+            position: $token->position,
+            tokens: $token->tokens,
+        );
     }
 }
