@@ -10,7 +10,9 @@ use Alocasia\Interpreter\Evaluator\StackedItem\StackedItem;
 use Alocasia\Interpreter\Token\Block;
 use Alocasia\Interpreter\Token\FloatLiteral;
 use Alocasia\Interpreter\Token\IntegerLiteral;
+use Alocasia\Interpreter\Token\Plus;
 use Alocasia\Interpreter\Token\Token;
+use Alocasia\Interpreter\Token\Variable;
 
 class Evaluator
 {
@@ -54,6 +56,8 @@ class Evaluator
             IntegerLiteral::class => EvaluatorOfIntegerLiteral::evaluate($this),
             FloatLiteral::class => EvaluatorOfFloatLiteral::evaluate($this),
             Block::class => EvaluatorOfBlock::evaluate($this),
+            Variable::class => EvaluatorOfIdentifier::evaluate($this),
+            Plus::class => EvaluatorOfAddition::evaluate($this),
             default => $this,
         };
 
