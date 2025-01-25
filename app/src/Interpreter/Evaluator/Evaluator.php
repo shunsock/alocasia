@@ -7,6 +7,7 @@ namespace Alocasia\Interpreter\Evaluator;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\StackedItem;
+use Alocasia\Interpreter\Token\Asterisk;
 use Alocasia\Interpreter\Token\Block;
 use Alocasia\Interpreter\Token\FloatLiteral;
 use Alocasia\Interpreter\Token\IntegerLiteral;
@@ -60,6 +61,7 @@ class Evaluator
             Variable::class => EvaluatorOfIdentifier::evaluate($this),
             Plus::class => EvaluatorOfAddition::evaluate($this),
             Minus::class => EvaluatorOfSubtraction::evaluate($this),
+            Asterisk::class => EvaluatorOfMultiplication::evaluate($this),
             default => $this,
         };
 
