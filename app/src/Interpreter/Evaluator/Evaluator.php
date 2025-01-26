@@ -55,7 +55,7 @@ class Evaluator
      */
     private function _evaluate(): void
     {
-        $evaluator = match (get_class($this->tokens[0])) {
+        match (get_class($this->tokens[0])) {
             IntegerLiteral::class => EvaluatorOfIntegerLiteral::evaluate($this),
             FloatLiteral::class => EvaluatorOfFloatLiteral::evaluate($this),
             Block::class => EvaluatorOfBlock::evaluate($this),
@@ -66,10 +66,6 @@ class Evaluator
             Slash::class => EvaluatorOfDivision::evaluate($this),
             default => $this,
         };
-
-        $this->hashmap = $evaluator->hashmap;
-        $this->stack = $evaluator->stack;
-        $this->tokens = $evaluator->tokens;
     }
 
     /**
