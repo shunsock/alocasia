@@ -9,6 +9,7 @@ use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\StackedItem;
 use Alocasia\Interpreter\Token\Asterisk;
 use Alocasia\Interpreter\Token\Block;
+use Alocasia\Interpreter\Token\ConditionalBranch;
 use Alocasia\Interpreter\Token\FloatLiteral;
 use Alocasia\Interpreter\Token\IntegerLiteral;
 use Alocasia\Interpreter\Token\Minus;
@@ -64,6 +65,7 @@ class Evaluator
             Minus::class => EvaluatorOfSubtraction::evaluate($this),
             Asterisk::class => EvaluatorOfMultiplication::evaluate($this),
             Slash::class => EvaluatorOfDivision::evaluate($this),
+            ConditionalBranch::class => EvaluatorOfConditionalBranch::evaluate($this),
             default => $this,
         };
     }
@@ -91,9 +93,9 @@ class Evaluator
             );
             $block_evaluator->evaluate();
 
+            // 共有して更新されたhashmapとstackを元のevaluatorに渡す
             $this->hashmap = $block_evaluator->hashmap;
             $this->stack = $block_evaluator->stack;
-            $this->tokens = $block_evaluator->tokens;
         }
     }
 }
