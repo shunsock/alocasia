@@ -20,7 +20,7 @@ class EvaluatorOfIdentifierTest extends TestCase
     /**
      * @throws EvaluatorException
      */
-    function testRegisterVariable(): void
+    function testAssignVariable(): void
     {
         // Setup
         $tokens = [
@@ -44,6 +44,41 @@ class EvaluatorOfIdentifierTest extends TestCase
         $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->hashmap["alocasia"]);
         $this->assertEquals(AlocasiaObjectType::INTEGER, $updated_evaluator->hashmap["alocasia"]->type);
         $this->assertEquals(0, $updated_evaluator->hashmap["alocasia"]->value);
+    }
+
+    /**
+     * @throws EvaluatorException
+     */
+    function testReAssignVariable(): void
+    {
+        // Setup
+        $hashmap = [
+            "alocasia" => new AlocasiaObject(
+                type: AlocasiaObjectType::INTEGER,
+                value: 1
+            )
+        ];
+        $tokens = [
+            new Variable(line: 1, position: 1, name: "alocasia"),
+            new Equal(line: 1, position: 10),
+            new Block(
+                line: 1,
+                position: 12,
+                tokens: [
+                    new IntegerLiteral(line: 1, position: 20, value: 2)
+                ]
+            )
+        ];
+        $evaluator = new Evaluator(hashmap: $hashmap, stack: [], tokens: $tokens);
+
+        // Run
+        $updated_evaluator = EvaluatorOfIdentifier::evaluate($evaluator);
+
+        // Assert
+        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 0) is registered as "alocasia"
+        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->hashmap["alocasia"]);
+        $this->assertEquals(AlocasiaObjectType::INTEGER, $updated_evaluator->hashmap["alocasia"]->type);
+        $this->assertEquals(2, $updated_evaluator->hashmap["alocasia"]->value);
     }
 
     /**
