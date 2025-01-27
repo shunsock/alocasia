@@ -12,6 +12,7 @@ use Alocasia\Interpreter\Token\Block;
 use Alocasia\Interpreter\Token\ConditionalBranch;
 use Alocasia\Interpreter\Token\FloatLiteral;
 use Alocasia\Interpreter\Token\IntegerLiteral;
+use Alocasia\Interpreter\Token\Loop;
 use Alocasia\Interpreter\Token\Minus;
 use Alocasia\Interpreter\Token\Plus;
 use Alocasia\Interpreter\Token\Slash;
@@ -66,6 +67,7 @@ class Evaluator
             Asterisk::class => EvaluatorOfMultiplication::evaluate($this),
             Slash::class => EvaluatorOfDivision::evaluate($this),
             ConditionalBranch::class => EvaluatorOfConditionalBranch::evaluate($this),
+            Loop::class => EvaluatorOfLoop::evaluate($this),
             default => $this,
         };
     }
