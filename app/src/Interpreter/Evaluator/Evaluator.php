@@ -10,6 +10,7 @@ use Alocasia\Interpreter\Evaluator\StackedItem\StackedItem;
 use Alocasia\Interpreter\Token\Asterisk;
 use Alocasia\Interpreter\Token\Block;
 use Alocasia\Interpreter\Token\ConditionalBranch;
+use Alocasia\Interpreter\Token\DoubleEqual;
 use Alocasia\Interpreter\Token\FloatLiteral;
 use Alocasia\Interpreter\Token\IntegerLiteral;
 use Alocasia\Interpreter\Token\Loop;
@@ -66,6 +67,7 @@ class Evaluator
             Minus::class => EvaluatorOfSubtraction::evaluate($this),
             Asterisk::class => EvaluatorOfMultiplication::evaluate($this),
             Slash::class => EvaluatorOfDivision::evaluate($this),
+            DoubleEqual::class => EvaluatorOfCondition::evaluate($this),
             ConditionalBranch::class => EvaluatorOfConditionalBranch::evaluate($this),
             Loop::class => EvaluatorOfLoop::evaluate($this),
             default => $this,
