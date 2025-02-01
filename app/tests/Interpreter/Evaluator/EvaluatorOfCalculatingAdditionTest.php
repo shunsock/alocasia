@@ -6,7 +6,7 @@ namespace Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
-use Alocasia\Interpreter\Evaluator\EvaluatorOfAddition;
+use Alocasia\Interpreter\Evaluator\EvaluatorOfCalculatingAddition;
 use Alocasia\Interpreter\Evaluator\EvaluatorOfCreatingAlocasiaIntegerTypeObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
@@ -16,7 +16,7 @@ use Alocasia\Interpreter\Token\IntegerLiteral;
 use Alocasia\Interpreter\Token\Plus;
 use PHPUnit\Framework\TestCase;
 
-class EvaluatorOfAdditionTest extends TestCase
+class EvaluatorOfCalculatingAdditionTest extends TestCase
 {
     /**
      * @throws EvaluatorException
@@ -40,13 +40,15 @@ class EvaluatorOfAdditionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfAddition::evaluate($evaluator);
+        EvaluatorOfCalculatingAddition::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::INTEGER, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::INTEGER, value: 1)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::INTEGER, $evaluator->stack[0]->type);
+        $this->assertEquals(1, $evaluator->stack[0]->value);
     }
 
     /**
@@ -71,13 +73,15 @@ class EvaluatorOfAdditionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfAddition::evaluate($evaluator);
+        EvaluatorOfCalculatingAddition::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
@@ -102,13 +106,15 @@ class EvaluatorOfAdditionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfAddition::evaluate($evaluator);
+        EvaluatorOfCalculatingAddition::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
@@ -133,13 +139,15 @@ class EvaluatorOfAdditionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfAddition::evaluate($evaluator);
+        EvaluatorOfCalculatingAddition::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
@@ -148,6 +156,7 @@ class EvaluatorOfAdditionTest extends TestCase
     function testAdditionBlock(): void
     {
         // Setup
+        // 1 + 0.0 = 1.0
         $tokens = [
             new Plus(line: 1, position: 3)
         ];
@@ -171,13 +180,15 @@ class EvaluatorOfAdditionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfAddition::evaluate($evaluator);
+        EvaluatorOfCalculatingAddition::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
@@ -186,6 +197,7 @@ class EvaluatorOfAdditionTest extends TestCase
     function testAdditionComplexBlock(): void
     {
         // Setup
+        // 0 { 1 1.0 + } +
         $tokens = [
             new Plus(line: 1, position: 3)
         ];
@@ -207,19 +219,20 @@ class EvaluatorOfAdditionTest extends TestCase
                         line: 1,
                         position: 9,
                         value: 1.0
-                    )
+                    ),
+                    new Plus(line: 1, position: 11)
                 ]
             )
         ];
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfAddition::evaluate($evaluator);
+        EvaluatorOfCalculatingAddition::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(2.0, $evaluator->stack[0]->value);
     }
 }

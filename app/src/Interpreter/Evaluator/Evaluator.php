@@ -63,7 +63,7 @@ class Evaluator
             FloatLiteral::class => EvaluatorOfCreatingAlocasiaFloatTypeObject::evaluate($this),
             Block::class => EvaluatorOfCreatingAlocasiaBlock::evaluate($this),
             Variable::class => EvaluatorOfVariableOperation::evaluate($this),
-            Plus::class => EvaluatorOfAddition::evaluate($this),
+            Plus::class => EvaluatorOfCalculatingAddition::evaluate($this),
             Minus::class => EvaluatorOfSubtraction::evaluate($this),
             Asterisk::class => EvaluatorOfMultiplication::evaluate($this),
             Slash::class => EvaluatorOfDivision::evaluate($this),
@@ -121,14 +121,6 @@ class Evaluator
         return $actualStackedItem;
     }
 
-    /**
-     * @param Token $token
-     * @return void
-     */
-    public function enqueueToken(Token $token): void
-    {
-        $this->token_queue[] = $token;
-    }
 
     /**
      * @throws EvaluatorException
@@ -164,5 +156,39 @@ class Evaluator
         }
 
         return $actualToken;
+    }
+
+    /**
+     * @return AlocasiaObject
+     * @throws EvaluatorException
+     */
+    public function getOperandObject(): AlocasiaObject
+    {
+        // stackにindexでアクセスするのでValidation
+        if (empty($this->stack)) throw new EvaluatorException(
+            message: "Stack Underflow: Stackが空でOperandを作成できません"
+        );
+
+        $last_stacked_item = end($this->stack);
+
+        // Stack topがAlocasiaObjectの場合, AlocasiaObjectを返す
+        if ($last_stacked_item instanceof AlocasiaObject) {
+            $this->popItemFromStack();
+            return $last_stacked_item;
+        }
+
+        // Stack topがAlocasiaBlockの場合は
+        // AlocasiaBlockの評価後のStack topのAlocasiaObjectを返す
+        EvaluatorOfAlocasiaBlock::evaluate($this);
+
+        $stacked_item_after_evaluate_block = $this->popItemFromStack();
+
+        /** @var AlocasiaObject $alocasiaObject */
+        $alocasiaObject = $this->validateStackedItem(
+            expectedStackedItemClass: AlocasiaObject::class,
+            actualStackedItem: $stacked_item_after_evaluate_block,
+        );
+
+        return $alocasiaObject;
     }
 }

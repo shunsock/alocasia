@@ -6,7 +6,7 @@ namespace Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
-use Alocasia\Interpreter\Evaluator\EvaluatorOfAddition;
+use Alocasia\Interpreter\Evaluator\EvaluatorOfCalculatingAddition;
 use Alocasia\Interpreter\Evaluator\EvaluatorOfSubtraction;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
@@ -171,7 +171,7 @@ class EvaluatorOfSubtractionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfAddition::evaluate($evaluator);
+        $updated_evaluator = EvaluatorOfCalculatingAddition::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
