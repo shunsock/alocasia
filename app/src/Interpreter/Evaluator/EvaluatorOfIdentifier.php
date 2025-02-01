@@ -65,7 +65,7 @@ class EvaluatorOfIdentifier implements IEvaluator
         // Equalを読み飛ばす: "=" は 人間用のかざり
         array_shift($e->token_queue);
         // Blockを展開, StackにAlocasiaBlockをpush
-        EvaluatorOfBlock::evaluate($e);
+        EvaluatorOfCreatingAlocasiaBlock::evaluate($e);
         // Blockを解釈: AlocasiaBlockでない場合はevaluateAlocasiaBlockがErrorを投げる
         $e->evaluateAlocasiaBlock();
         // Stackをpopして変数として使用する値を取得, hashmapに変数を登録

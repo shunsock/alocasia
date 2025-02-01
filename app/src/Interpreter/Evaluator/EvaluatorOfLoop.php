@@ -29,7 +29,7 @@ class EvaluatorOfLoop implements IEvaluator
             );
         }
         while (true) {
-            EvaluatorOfBlock::evaluate($e); // blockのtokensをStackに積む
+            EvaluatorOfCreatingAlocasiaBlock::evaluate($e); // blockのtokensをStackに積む
             $e->evaluateAlocasiaBlock(); // blockのtokensを評価
             // 配列アクセスをおこなうのでerror回避
             if (empty($e->stack)) continue;

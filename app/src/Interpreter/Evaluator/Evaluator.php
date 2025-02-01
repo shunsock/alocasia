@@ -61,7 +61,7 @@ class Evaluator
         match (get_class($this->token_queue[0])) {
             IntegerLiteral::class => EvaluatorOfCreatingAlocasiaIntegerTypeObject::evaluate($this),
             FloatLiteral::class => EvaluatorOfCreatingAlocasiaFloatTypeObject::evaluate($this),
-            Block::class => EvaluatorOfBlock::evaluate($this),
+            Block::class => EvaluatorOfCreatingAlocasiaBlock::evaluate($this),
             Variable::class => EvaluatorOfIdentifier::evaluate($this),
             Plus::class => EvaluatorOfAddition::evaluate($this),
             Minus::class => EvaluatorOfSubtraction::evaluate($this),

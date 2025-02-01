@@ -7,7 +7,7 @@ namespace Alocasia\Interpreter\Evaluator;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Token\Block;
 
-class EvaluatorOfBlock implements IEvaluator
+class EvaluatorOfCreatingAlocasiaBlock implements IEvaluator
 {
     /**
      * @param Evaluator $e
@@ -16,17 +16,16 @@ class EvaluatorOfBlock implements IEvaluator
      */
     public static function evaluate(Evaluator $e): Evaluator
     {
-        $token = array_shift($e->token_queue);
-        if ($token instanceof Block === false) {
-            throw new EvaluatorException(
-                source_code_line: $token->line,
-                source_code_position: $token->position,
-                message: "予期しないエラーが発生しました",
-            );
-        } else {
-            $e->stack[] = self::createAlocasiaBlock($token);
-            return $e;
-        }
+        $token =$e->dequeueToken();
+
+        /** @var Block $blockToken */
+        $blockToken = $e->validateToken(
+            expectedTokenClass: Block::class,
+            actualToken: $token,
+        );
+
+        $e->pushItemToStack(self::createAlocasiaBlock($blockToken));
+        return $e;
     }
 
     private static function createAlocasiaBlock(Block $token): AlocasiaBlock

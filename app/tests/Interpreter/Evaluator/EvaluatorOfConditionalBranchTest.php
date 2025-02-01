@@ -6,7 +6,7 @@ namespace Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
-use Alocasia\Interpreter\Evaluator\EvaluatorOfBlock;
+use Alocasia\Interpreter\Evaluator\EvaluatorOfCreatingAlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\EvaluatorOfConditionalBranch;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
