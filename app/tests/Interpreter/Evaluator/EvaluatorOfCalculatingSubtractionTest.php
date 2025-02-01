@@ -6,8 +6,7 @@ namespace Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
-use Alocasia\Interpreter\Evaluator\EvaluatorOfCalculatingAddition;
-use Alocasia\Interpreter\Evaluator\EvaluatorOfSubtraction;
+use Alocasia\Interpreter\Evaluator\EvaluatorOfCalculatingSubtraction;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
@@ -16,12 +15,12 @@ use Alocasia\Interpreter\Token\IntegerLiteral;
 use Alocasia\Interpreter\Token\Minus;
 use PHPUnit\Framework\TestCase;
 
-class EvaluatorOfSubtractionTest extends TestCase
+class EvaluatorOfCalculatingSubtractionTest extends TestCase
 {
     /**
      * @throws EvaluatorException
      */
-    function testAdditionIntegerAndInteger(): void
+    function testSubtractionIntegerAndInteger(): void
     {
         // Setup
         $tokens = [
@@ -40,19 +39,19 @@ class EvaluatorOfSubtractionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfSubtraction::evaluate($evaluator);
+        EvaluatorOfCalculatingSubtraction::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::INTEGER, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(-1, $updated_evaluator->stack[0]->value);
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::INTEGER, $evaluator->stack[0]->type);
+        $this->assertEquals(-1, $evaluator->stack[0]->value);
     }
 
     /**
      * @throws EvaluatorException
      */
-    function testAdditionIntegerAndFloat(): void
+    function testSubtractionIntegerAndFloat(): void
     {
         // Setup
         $tokens = [
@@ -71,19 +70,19 @@ class EvaluatorOfSubtractionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfSubtraction::evaluate($evaluator);
+        EvaluatorOfCalculatingSubtraction::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(0.0, $updated_evaluator->stack[0]->value);
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(0.0, $evaluator->stack[0]->value);
     }
 
     /**
      * @throws EvaluatorException
      */
-    function testAdditionFloatAndInteger(): void
+    function testSubtractionFloatAndInteger(): void
     {
         // Setup
         $tokens = [
@@ -102,19 +101,19 @@ class EvaluatorOfSubtractionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfSubtraction::evaluate($evaluator);
+        EvaluatorOfCalculatingSubtraction::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
      * @throws EvaluatorException
      */
-    function testAdditionFloatAndFloat(): void
+    function testSubtractionFloatAndFloat(): void
     {
         // Setup
         $tokens = [
@@ -133,19 +132,19 @@ class EvaluatorOfSubtractionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfSubtraction::evaluate($evaluator);
+        EvaluatorOfCalculatingSubtraction::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
      * @throws EvaluatorException
      */
-    function testAdditionBlock(): void
+    function testSubtractionBlock(): void
     {
         // Setup
         $tokens = [
@@ -171,19 +170,19 @@ class EvaluatorOfSubtractionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfCalculatingAddition::evaluate($evaluator);
+        EvaluatorOfCalculatingSubtraction::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
      * @throws EvaluatorException
      */
-    function testAdditionComplexBlock(): void
+    function testSubtractionComplexBlock(): void
     {
         // Setup
         $tokens = [
@@ -219,12 +218,12 @@ class EvaluatorOfSubtractionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfSubtraction::evaluate($evaluator);
+        EvaluatorOfCalculatingSubtraction::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 }

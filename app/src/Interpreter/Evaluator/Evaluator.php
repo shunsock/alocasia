@@ -63,7 +63,7 @@ class Evaluator
             Block::class => EvaluatorOfCreatingAlocasiaBlock::evaluate($this),
             Variable::class => EvaluatorOfVariableOperation::evaluate($this),
             Plus::class => EvaluatorOfCalculatingAddition::evaluate($this),
-            Minus::class => EvaluatorOfSubtraction::evaluate($this),
+            Minus::class => EvaluatorOfCalculatingSubtraction::evaluate($this),
             Asterisk::class => EvaluatorOfMultiplication::evaluate($this),
             Slash::class => EvaluatorOfDivision::evaluate($this),
             DoubleEqual::class => EvaluatorOfCondition::evaluate($this),
