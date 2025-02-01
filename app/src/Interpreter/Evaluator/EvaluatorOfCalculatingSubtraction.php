@@ -19,8 +19,8 @@ class EvaluatorOfCalculatingSubtraction implements IEvaluator
         $operand2 = $e->getOperandObject();
         $operand1 = $e->getOperandObject();
 
-        // operand1, operand2が両方Integerならtype: FLOATのAlocasiaObjectをpush
         if ($operand1->type === AlocasiaObjectType::INTEGER && $operand2->type === AlocasiaObjectType::INTEGER) {
+            // operand1, operand2が両方Integerならtype: FLOATのAlocasiaObjectをpush
             $e->pushItemToStack(
                 new AlocasiaObject(
                     type: AlocasiaObjectType::INTEGER,
