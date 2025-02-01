@@ -59,7 +59,7 @@ class Evaluator
     private function _evaluate(): void
     {
         match (get_class($this->token_queue[0])) {
-            IntegerLiteral::class => EvaluatorOfIntegerLiteral::evaluate($this),
+            IntegerLiteral::class => EvaluatorOfCreatingAlocasiaIntegerTypeObject::evaluate($this),
             FloatLiteral::class => EvaluatorOfCreatingAlocasiaFloatTypeObject::evaluate($this),
             Block::class => EvaluatorOfBlock::evaluate($this),
             Variable::class => EvaluatorOfIdentifier::evaluate($this),

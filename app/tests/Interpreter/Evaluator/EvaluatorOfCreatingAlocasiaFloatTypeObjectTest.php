@@ -12,7 +12,7 @@ use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType
 use Alocasia\Interpreter\Token\FloatLiteral;
 use PHPUnit\Framework\TestCase;
 
-class EvaluatorOfFloatLiteralTest extends TestCase
+class EvaluatorOfCreatingAlocasiaFloatTypeObjectTest extends TestCase
 {
     /**
      * @throws EvaluatorException
