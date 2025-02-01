@@ -230,7 +230,9 @@ class EvaluatorOfCalculatingAdditionTest extends TestCase
         EvaluatorOfCalculatingAddition::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType:FLOAT, value: 2.0)
         $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
         $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
         $this->assertEquals(2.0, $evaluator->stack[0]->value);
