@@ -55,13 +55,15 @@ class EvaluatorOfConditionalBranchTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: [], tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfConditionalBranch::evaluate($evaluator);
+        $evaluator = EvaluatorOfConditionalBranch::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
@@ -100,12 +102,14 @@ class EvaluatorOfConditionalBranchTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: [], tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfConditionalBranch::evaluate($evaluator);
+        EvaluatorOfConditionalBranch::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 0.0)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(0.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 0.0)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(0.0, $evaluator->stack[0]->value);
     }
 }

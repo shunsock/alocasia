@@ -76,7 +76,6 @@ class EvaluatorOfAlocasiaBlockTest extends TestCase
 
         // Run
         EvaluatorOfAlocasiaBlock::evaluate($evaluator);
-        print_r($evaluator->stack);
 
         // Assert
         // Expected AlocasiaObject(line: 1, position: 1, value: 0)
