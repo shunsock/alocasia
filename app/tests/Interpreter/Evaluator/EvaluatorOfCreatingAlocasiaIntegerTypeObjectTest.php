@@ -9,7 +9,6 @@ use Alocasia\Interpreter\Evaluator\EvaluatorException;
 use Alocasia\Interpreter\Evaluator\EvaluatorOfCreatingAlocasiaIntegerTypeObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
-use Alocasia\Interpreter\Token\FloatLiteral;
 use Alocasia\Interpreter\Token\IntegerLiteral;
 use PHPUnit\Framework\TestCase;
 
