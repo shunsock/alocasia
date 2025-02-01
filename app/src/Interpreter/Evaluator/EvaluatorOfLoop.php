@@ -6,7 +6,6 @@ namespace Alocasia\Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
-use Alocasia\Interpreter\Token\Block;
 
 class EvaluatorOfLoop implements IEvaluator
 {
@@ -19,26 +18,37 @@ class EvaluatorOfLoop implements IEvaluator
     {
         // stack: [...]
         // tokens: loop Block
-        $loop_token = array_shift($e->token_queue); // loop tokenを消費
-        $block = array_shift($e->token_queue);
-        if ($block instanceof Block === false) {
-            throw new EvaluatorException(
-                source_code_line: $loop_token->line,
-                source_code_position: $loop_token->position,
-                message: "loop keywordのあとにBlockがありません"
-            );
-        }
+        // loopを消費
+        $loopToken = $e->dequeueToken();
+        // BlockTokenからAlocasiaBlockを作成してStackにpush
+        EvaluatorOfCreatingAlocasiaBlock::evaluate($e);
+        // Blockが持つToken配列を取得
+        $stackedItem = end($e->stack);
+        /** @var AlocasiaBlock $alocasiaBlock */
+        $alocasiaBlock = $e->validateStackedItem(
+            expectedStackedItemClass: AlocasiaBlock::class,
+            actualStackedItem: $stackedItem
+        );
+        $tokens = $alocasiaBlock->tokens;
+
         while (true) {
-            EvaluatorOfCreatingAlocasiaBlock::evaluate($e); // blockのtokensをStackに積む
-            $e->evaluateAlocasiaBlock(); // blockのtokensを評価
-            // 配列アクセスをおこなうのでerror回避
-            if (empty($e->stack)) continue;
+            // Blockを評価
+            EvaluatorOfAlocasiaBlock::evaluate($e);
+            // 評価後にStackが何もない場合は無限ループになっている
+            // ex1: loop {}
+            // ex2: loop { x = 0 }
+            if (empty($e->stack)) throw new EvaluatorException(
+                message: "Endless Loop: LoopのIteration終了時にStackに何も積まれていません",
+                source_code_line: $alocasiaBlock->line,
+                source_code_position: $alocasiaBlock->position
+            );
             // Stack topが0ならbreak
             if ($e->stack[0] instanceof AlocasiaObject) {
                 if ($e->stack[0]->value === 0) return $e;
             }
+
             // 同じ処理をするためにtokensに$blockを積みなおす
-            array_unshift($e->token_queue, $block);
+            array_unshift($e->token_queue, $tokens);
         }
     }
 }
