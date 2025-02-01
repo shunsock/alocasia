@@ -8,6 +8,7 @@ use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\StackedItem;
 use Alocasia\Interpreter\Token\Asterisk;
 use Alocasia\Interpreter\Token\Block;
+use Alocasia\Interpreter\Token\BuiltinFunction;
 use Alocasia\Interpreter\Token\ConditionalBranch;
 use Alocasia\Interpreter\Token\DoubleEqual;
 use Alocasia\Interpreter\Token\FloatLiteral;
@@ -69,6 +70,7 @@ class Evaluator
             DoubleEqual::class => EvaluatorOfCalculatingCondition::evaluate($this),
             ConditionalBranch::class => EvaluatorOfConditionalBranch::evaluate($this),
             Loop::class => EvaluatorOfLoop::evaluate($this),
+            BuiltinFunction::class => EvaluatorOfBuiltinFunction::evaluate($this),
             default => $this,
         };
     }
