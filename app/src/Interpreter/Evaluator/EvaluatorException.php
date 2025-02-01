@@ -7,12 +7,12 @@ use Throwable;
 
 class EvaluatorException extends Exception
 {
-    public readonly int $source_code_line;
-    public readonly int $source_code_position;
+    public readonly ?int $source_code_line;
+    public readonly ?int $source_code_position;
     public function __construct(
-        int $source_code_line,
-        int $source_code_position,
         string $message,
+        ?int $source_code_line = null,
+        ?int $source_code_position = null,
         int $code = 0,
         Throwable $previous = null
     ) {

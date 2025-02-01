@@ -82,9 +82,9 @@ class Evaluator
         $alocasia_block = array_shift($this->stack);
         if ($alocasia_block instanceof AlocasiaBlock === false) {
             throw new EvaluatorException(
+                message: "予期しないエラーが発生しました",
                 source_code_line: 0,
                 source_code_position: 0,
-                message: "予期しないエラーが発生しました",
             );
         } else {
             $block_evaluator = new Evaluator(
@@ -101,5 +101,44 @@ class Evaluator
             $this->hashmap = $block_evaluator->hashmap;
             $this->stack = $block_evaluator->stack;
         }
+    }
+
+    /**
+     * @param StackedItem $item
+     * @return void
+     */
+    public function push_stack(StackedItem $item): void
+    {
+        $this->stack[] = $item;
+    }
+
+    /**
+     * @return StackedItem
+     * @throws EvaluatorException
+     */
+    public function pop_stack(): StackedItem
+    {
+        $stacked_item = array_pop($this->stack);
+        if (!$stacked_item) throw new EvaluatorException(
+            message: "Stack Underflowが発生しました"
+        );
+        return $stacked_item;
+    }
+
+    public function push_token(Token $token): void
+    {
+        $this->tokens[] = $token;
+    }
+
+    /**
+     * @throws EvaluatorException
+     */
+    public function pop_token(): Token
+    {
+        $t = array_pop($this->tokens);
+        if (!$t) throw new EvaluatorException(
+            message: "Tokens Underflowが発生しました"
+        );
+        return $t;
     }
 }
