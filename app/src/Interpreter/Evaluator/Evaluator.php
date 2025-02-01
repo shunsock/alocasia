@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Alocasia\Interpreter\Evaluator;
 
-use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\StackedItem;
 use Alocasia\Interpreter\Token\Asterisk;
