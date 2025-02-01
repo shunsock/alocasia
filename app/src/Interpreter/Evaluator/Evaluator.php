@@ -65,7 +65,7 @@ class Evaluator
             Plus::class => EvaluatorOfCalculatingAddition::evaluate($this),
             Minus::class => EvaluatorOfCalculatingSubtraction::evaluate($this),
             Asterisk::class => EvaluatorOfCalculatingMultiplication::evaluate($this),
-            Slash::class => EvaluatorOfDivision::evaluate($this),
+            Slash::class => EvaluatorOfCalculatingDivision::evaluate($this),
             DoubleEqual::class => EvaluatorOfCondition::evaluate($this),
             ConditionalBranch::class => EvaluatorOfConditionalBranch::evaluate($this),
             Loop::class => EvaluatorOfLoop::evaluate($this),

@@ -6,7 +6,7 @@ namespace Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
-use Alocasia\Interpreter\Evaluator\EvaluatorOfDivision;
+use Alocasia\Interpreter\Evaluator\EvaluatorOfCalculatingDivision;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
@@ -15,7 +15,7 @@ use Alocasia\Interpreter\Token\IntegerLiteral;
 use Alocasia\Interpreter\Token\Slash;
 use PHPUnit\Framework\TestCase;
 
-class EvaluatorOfDivisionTest extends TestCase
+class EvaluatorOfCalculatingDivisionTest extends TestCase
 {
     /**
      * @throws EvaluatorException
@@ -39,13 +39,15 @@ class EvaluatorOfDivisionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfDivision::evaluate($evaluator);
+        EvaluatorOfCalculatingDivision::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::INTEGER, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(-1, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::INTEGER, value: -1)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::INTEGER, $evaluator->stack[0]->type);
+        $this->assertEquals(-1, $evaluator->stack[0]->value);
     }
 
     /**
@@ -70,13 +72,15 @@ class EvaluatorOfDivisionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfDivision::evaluate($evaluator);
+        EvaluatorOfCalculatingDivision::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
@@ -101,13 +105,15 @@ class EvaluatorOfDivisionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfDivision::evaluate($evaluator);
+        EvaluatorOfCalculatingDivision::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(0.5, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 0.5)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(0.5, $evaluator->stack[0]->value);
     }
 
     /**
@@ -132,13 +138,15 @@ class EvaluatorOfDivisionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfDivision::evaluate($evaluator);
+        EvaluatorOfCalculatingDivision::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
@@ -170,13 +178,15 @@ class EvaluatorOfDivisionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfDivision::evaluate($evaluator);
+        EvaluatorOfCalculatingDivision::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(1.0, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(1.0, $evaluator->stack[0]->value);
     }
 
     /**
@@ -218,13 +228,15 @@ class EvaluatorOfDivisionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfDivision::evaluate($evaluator);
+        EvaluatorOfCalculatingDivision::evaluate($evaluator);
 
         // Assert
-        // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
-        $this->assertInstanceOf(AlocasiaObject::class, $updated_evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::FLOAT, $updated_evaluator->stack[0]->type);
-        $this->assertEquals(2, $updated_evaluator->stack[0]->value);
+        // Stackの要素数は 1
+        $this->assertCount(1, $evaluator->stack);
+        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::INTEGER, value: 2)
+        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
+        $this->assertEquals(AlocasiaObjectType::FLOAT, $evaluator->stack[0]->type);
+        $this->assertEquals(2, $evaluator->stack[0]->value);
     }
 
     /**
@@ -253,7 +265,7 @@ class EvaluatorOfDivisionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfDivision::evaluate($evaluator);
+        EvaluatorOfCalculatingDivision::evaluate($evaluator);
     }
 
     /**
@@ -282,6 +294,6 @@ class EvaluatorOfDivisionTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfDivision::evaluate($evaluator);
+        EvaluatorOfCalculatingDivision::evaluate($evaluator);
     }
 }
