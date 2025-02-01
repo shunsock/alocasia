@@ -8,7 +8,7 @@ use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Token\FloatLiteral;
 
-class EvaluatorOfFloatLiteral implements IEvaluator
+class EvaluatorOfCreatingAlocasiaFloatTypeObject implements IEvaluator
 {
     /**
      * @param Evaluator $e

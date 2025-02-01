@@ -6,7 +6,7 @@ namespace Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
-use Alocasia\Interpreter\Evaluator\EvaluatorOfFloatLiteral;
+use Alocasia\Interpreter\Evaluator\EvaluatorOfCreatingAlocasiaFloatTypeObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Token\FloatLiteral;
@@ -26,7 +26,7 @@ class EvaluatorOfFloatLiteralTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: [], tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfFloatLiteral::evaluate($evaluator);
+        $updated_evaluator = EvaluatorOfCreatingAlocasiaFloatTypeObject::evaluate($evaluator);
 
         // Assert
         // Expected: AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 0.0)
@@ -54,7 +54,7 @@ class EvaluatorOfFloatLiteralTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: $stack, tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfFloatLiteral::evaluate($evaluator);
+        $updated_evaluator = EvaluatorOfCreatingAlocasiaFloatTypeObject::evaluate($evaluator);
 
         // Assert
         // Expected: [
