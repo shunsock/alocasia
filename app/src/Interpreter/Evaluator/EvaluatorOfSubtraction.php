@@ -16,7 +16,7 @@ class EvaluatorOfSubtraction implements IEvaluator
     public static function evaluate(Evaluator $e): Evaluator
     {
         // operator, operand1, operand2を取得
-        array_shift($e->tokens); // operatorは無視
+        array_shift($e->token_queue); // operatorは無視
         $operand1 = self::validateOperand($e);
         $operand2 = self::validateOperand($e);
 

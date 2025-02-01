@@ -16,7 +16,7 @@ class EvaluatorOfCondition implements IEvaluator
     public static function evaluate(Evaluator $e): Evaluator
     {
         // operator, operand1, operand2を取得
-        array_pop($e->tokens); // operatorは無視
+        array_pop($e->token_queue); // operatorは無視
         $operand2 = self::validateOperand($e);
         $operand1 = self::validateOperand($e);
 

@@ -19,7 +19,7 @@ class EvaluatorOfIdentifier implements IEvaluator
      */
     public static function evaluate(Evaluator $e): Evaluator
     {
-        $token = array_shift($e->tokens);
+        $token = array_shift($e->token_queue);
         if ($token instanceof Variable === false) {
             throw new EvaluatorException(
                 source_code_line: $token->line,
@@ -34,9 +34,9 @@ class EvaluatorOfIdentifier implements IEvaluator
             return $e;
         }
 
-        if (empty($e->tokens)) {
+        if (empty($e->token_queue)) {
             self::read($e, $token);
-        } else if ($e->tokens[0] instanceof Equal) {
+        } else if ($e->token_queue[0] instanceof Equal) {
             // 再代入
             // x = {1} x = {2}
             // type checkするならre-assignを定義してarray_popしたclassを型チェック
@@ -63,7 +63,7 @@ class EvaluatorOfIdentifier implements IEvaluator
     {
         // 変数の登録
         // Equalを読み飛ばす: "=" は 人間用のかざり
-        array_shift($e->tokens);
+        array_shift($e->token_queue);
         // Blockを展開, StackにAlocasiaBlockをpush
         EvaluatorOfBlock::evaluate($e);
         // Blockを解釈: AlocasiaBlockでない場合はevaluateAlocasiaBlockがErrorを投げる

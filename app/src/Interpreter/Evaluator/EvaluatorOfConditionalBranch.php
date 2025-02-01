@@ -15,7 +15,7 @@ class EvaluatorOfConditionalBranch implements IEvaluator
     {
         // stack: [...]
         // tokens: if condition_block true_branch false_branch
-        $if_token = array_shift($e->tokens); // if tokenを消費
+        $if_token = array_shift($e->token_queue); // if tokenを消費
         EvaluatorOfBlock::evaluate($e); // conditional_blockのtokensをStackに積む
         $e->evaluateAlocasiaBlock(); // conditional_blockのtokensを評価
         $stackTop = array_shift($e->stack); // stack top (conditional_blockの評価結果を取得
@@ -33,9 +33,9 @@ class EvaluatorOfConditionalBranch implements IEvaluator
             if ($stackTopIsOne) {
                 EvaluatorOfBlock::evaluate($e); // true_branchをStackに積む
                 $e->evaluateAlocasiaBlock(); // true_branchを評価
-                array_shift($e->tokens); // false_branchをskip
+                array_shift($e->token_queue); // false_branchをskip
             } else {
-                array_shift($e->tokens); // true_branchをskip
+                array_shift($e->token_queue); // true_branchをskip
                 EvaluatorOfBlock::evaluate($e); // false_branchをStackに積む
                 $e->evaluateAlocasiaBlock(); // false_branchを評価
             }

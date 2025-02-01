@@ -17,8 +17,7 @@ class EvaluatorException extends Exception
         Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
-        $this->line = $source_code_line;
-        $this->source_code_line = $source_code_position;
+        $this->source_code_line = $source_code_line;
         $this->source_code_position = $source_code_position;
     }
 }

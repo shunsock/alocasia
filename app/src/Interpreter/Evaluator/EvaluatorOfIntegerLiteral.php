@@ -17,7 +17,7 @@ class EvaluatorOfIntegerLiteral implements IEvaluator
      */
     public static function evaluate(Evaluator $e): Evaluator
     {
-        $token = array_shift($e->tokens);
+        $token = array_shift($e->token_queue);
         if ($token instanceof IntegerLiteral === false) {
             throw new EvaluatorException(
                 source_code_line: $token->line,

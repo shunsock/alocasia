@@ -19,8 +19,8 @@ class EvaluatorOfLoop implements IEvaluator
     {
         // stack: [...]
         // tokens: loop Block
-        $loop_token = array_shift($e->tokens); // loop tokenを消費
-        $block = array_shift($e->tokens);
+        $loop_token = array_shift($e->token_queue); // loop tokenを消費
+        $block = array_shift($e->token_queue);
         if ($block instanceof Block === false) {
             throw new EvaluatorException(
                 source_code_line: $loop_token->line,
@@ -38,7 +38,7 @@ class EvaluatorOfLoop implements IEvaluator
                 if ($e->stack[0]->value === 0) return $e;
             }
             // 同じ処理をするためにtokensに$blockを積みなおす
-            array_unshift($e->tokens, $block);
+            array_unshift($e->token_queue, $block);
         }
     }
 }

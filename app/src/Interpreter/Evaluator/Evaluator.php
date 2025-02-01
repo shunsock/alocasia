@@ -29,7 +29,7 @@ class Evaluator
     public array $stack;
 
     /** @var Token[]  */
-    public array $tokens;
+    public array $token_queue;
 
     /**
      * @param array<string, AlocasiaObject> $hashmap
@@ -39,7 +39,7 @@ class Evaluator
     public function __construct(array $hashmap, array $stack, array $tokens) {
         $this->hashmap = $hashmap;
         $this->stack = $stack;
-        $this->tokens = $tokens;
+        $this->token_queue = $tokens;
     }
 
     /**
@@ -47,7 +47,7 @@ class Evaluator
      * @throws EvaluatorException
      */
     public function evaluate(): Evaluator {
-        while($this->tokens) {
+        while($this->token_queue) {
             $this->_evaluate();
         }
         return $this;
@@ -58,7 +58,7 @@ class Evaluator
      */
     private function _evaluate(): void
     {
-        match (get_class($this->tokens[0])) {
+        match (get_class($this->token_queue[0])) {
             IntegerLiteral::class => EvaluatorOfIntegerLiteral::evaluate($this),
             FloatLiteral::class => EvaluatorOfFloatLiteral::evaluate($this),
             Block::class => EvaluatorOfBlock::evaluate($this),
@@ -79,7 +79,7 @@ class Evaluator
      */
     public function evaluateAlocasiaBlock(): void
     {
-        $alocasia_block = array_shift($this->stack);
+        $alocasia_block = $this->popItemFromStack();
         if ($alocasia_block instanceof AlocasiaBlock === false) {
             throw new EvaluatorException(
                 message: "予期しないエラーが発生しました",
@@ -107,7 +107,7 @@ class Evaluator
      * @param StackedItem $item
      * @return void
      */
-    public function push_stack(StackedItem $item): void
+    public function pushItemToStack(StackedItem $item): void
     {
         $this->stack[] = $item;
     }
@@ -116,7 +116,7 @@ class Evaluator
      * @return StackedItem
      * @throws EvaluatorException
      */
-    public function pop_stack(): StackedItem
+    public function popItemFromStack(): StackedItem
     {
         $stacked_item = array_pop($this->stack);
         if (!$stacked_item) throw new EvaluatorException(
@@ -125,20 +125,48 @@ class Evaluator
         return $stacked_item;
     }
 
-    public function push_token(Token $token): void
+    /**
+     * @param Token $token
+     * @return void
+     */
+    public function enqueueToken(Token $token): void
     {
-        $this->tokens[] = $token;
+        $this->token_queue[] = $token;
     }
 
     /**
      * @throws EvaluatorException
      */
-    public function pop_token(): Token
+    public function dequeueToken(): Token
     {
-        $t = array_pop($this->tokens);
+        $t = array_shift($this->token_queue);
         if (!$t) throw new EvaluatorException(
-            message: "Tokens Underflowが発生しました"
+            message: "Token Queue Underflowが発生しました"
         );
         return $t;
+    }
+
+    /**
+     * @param class-string<Token> $expectedTokenClass
+     * @param Token $actualToken
+     * @return Token
+     * @throws EvaluatorException
+     */
+    public function validateToken(string $expectedTokenClass, Token $actualToken): Token
+    {
+        // 期待するクラスと一致するかを確認
+        if (!($actualToken instanceof $expectedTokenClass)) {
+            throw new EvaluatorException(
+                message: sprintf(
+                    "予期しないトークンが検出されました。期待: %s, 実際: %s",
+                    $expectedTokenClass,
+                    get_class($actualToken)
+                ),
+                source_code_line: $actualToken->line,
+                source_code_position: $actualToken->position
+            );
+        }
+
+        return $actualToken;
     }
 }

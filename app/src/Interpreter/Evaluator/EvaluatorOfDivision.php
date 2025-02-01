@@ -17,7 +17,7 @@ class EvaluatorOfDivision implements IEvaluator
     public static function evaluate(Evaluator $e): Evaluator
     {
         // operator, operand1, operand2を取得
-        $operator = array_shift($e->tokens);
+        $operator = array_shift($e->token_queue);
         $operand1 = self::validateOperand($e);
         $operand2 = self::validateOperand($e);
 
