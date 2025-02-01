@@ -75,35 +75,6 @@ class Evaluator
     }
 
     /**
-     * @throws EvaluatorException
-     */
-    public function evaluateAlocasiaBlock(): void
-    {
-        $alocasia_block = $this->popItemFromStack();
-        if ($alocasia_block instanceof AlocasiaBlock === false) {
-            throw new EvaluatorException(
-                message: "予期しないエラーが発生しました",
-                source_code_line: 0,
-                source_code_position: 0,
-            );
-        } else {
-            $block_evaluator = new Evaluator(
-                // 変数は全てGlobal Scope
-                hashmap: $this->hashmap,
-                // stackも共有
-                stack: $this->stack,
-                // tokenはBlockの持つtoken
-                tokens: $alocasia_block->tokens,
-            );
-            $block_evaluator->evaluate();
-
-            // 共有して更新されたhashmapとstackを元のevaluatorに渡す
-            $this->hashmap = $block_evaluator->hashmap;
-            $this->stack = $block_evaluator->stack;
-        }
-    }
-
-    /**
      * @param StackedItem $item
      * @return void
      */
@@ -123,6 +94,31 @@ class Evaluator
             message: "Stack Underflowが発生しました"
         );
         return $stacked_item;
+    }
+
+    /**
+     * @param class-string<StackedItem> $expectedStackedItemClass
+     * @param StackedItem $actualStackedItem
+     * @return StackedItem
+     * @throws EvaluatorException
+     */
+    public function validateStackedItem(
+        string $expectedStackedItemClass,
+        StackedItem $actualStackedItem
+    ): StackedItem
+    {
+        // 期待するクラスと一致するかを確認
+        if (!($actualStackedItem instanceof $expectedStackedItemClass)) {
+            throw new EvaluatorException(
+                message: sprintf(
+                    "予期しないトークンが検出されました。期待: %s, 実際: %s",
+                    $expectedStackedItemClass,
+                    get_class($actualStackedItem)
+                ),
+            );
+        }
+
+        return $actualStackedItem;
     }
 
     /**
