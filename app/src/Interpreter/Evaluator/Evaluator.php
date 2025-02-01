@@ -62,7 +62,7 @@ class Evaluator
             IntegerLiteral::class => EvaluatorOfCreatingAlocasiaIntegerTypeObject::evaluate($this),
             FloatLiteral::class => EvaluatorOfCreatingAlocasiaFloatTypeObject::evaluate($this),
             Block::class => EvaluatorOfCreatingAlocasiaBlock::evaluate($this),
-            Variable::class => EvaluatorOfIdentifier::evaluate($this),
+            Variable::class => EvaluatorOfVariableOperation::evaluate($this),
             Plus::class => EvaluatorOfAddition::evaluate($this),
             Minus::class => EvaluatorOfSubtraction::evaluate($this),
             Asterisk::class => EvaluatorOfMultiplication::evaluate($this),

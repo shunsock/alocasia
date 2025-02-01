@@ -6,7 +6,7 @@ namespace Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
-use Alocasia\Interpreter\Evaluator\EvaluatorOfIdentifier;
+use Alocasia\Interpreter\Evaluator\EvaluatorOfVariableOperation;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Token\Block;
@@ -15,7 +15,7 @@ use Alocasia\Interpreter\Token\IntegerLiteral;
 use Alocasia\Interpreter\Token\Variable;
 use PHPUnit\Framework\TestCase;
 
-class EvaluatorOfIdentifierTest extends TestCase
+class EvaluatorOfVariableOperationTest extends TestCase
 {
     /**
      * @throws EvaluatorException
@@ -37,7 +37,7 @@ class EvaluatorOfIdentifierTest extends TestCase
         $evaluator = new Evaluator(hashmap: [], stack: [], tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfIdentifier::evaluate($evaluator);
+        $updated_evaluator = EvaluatorOfVariableOperation::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 0) is registered as "alocasia"
@@ -72,7 +72,7 @@ class EvaluatorOfIdentifierTest extends TestCase
         $evaluator = new Evaluator(hashmap: $hashmap, stack: [], tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfIdentifier::evaluate($evaluator);
+        $updated_evaluator = EvaluatorOfVariableOperation::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 0) is registered as "alocasia"
@@ -99,7 +99,7 @@ class EvaluatorOfIdentifierTest extends TestCase
         $evaluator = new Evaluator(hashmap: $hashmap, stack: [], tokens: $tokens);
 
         // Run
-        $updated_evaluator = EvaluatorOfIdentifier::evaluate($evaluator);
+        $updated_evaluator = EvaluatorOfVariableOperation::evaluate($evaluator);
 
         // Assert
         // Expected AlocasiaObject(type: AlocasiaObjectType:INTEGER, value: 1)
