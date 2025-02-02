@@ -91,5 +91,6 @@ class EvaluatorOfBuiltinFunction implements IEvaluator
             // 数値を文字にして出力
             echo chr($alocasiaNumberObject->value);
         }
+        echo "\n";
     }
 }
