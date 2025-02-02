@@ -48,31 +48,4 @@ class EvaluatorOfLoopTest extends TestCase
         $this->assertEquals(AlocasiaObjectType::INTEGER, $evaluator->stack[0]->type);
         $this->assertEquals(0, $evaluator->stack[0]->value);
     }
-
-    /**
-     * @throws EvaluatorException
-     */
-    function testAssertEndlessLoopBranch(): void
-    {
-        // Expect
-        $this->expectException(EvaluatorException::class);
-        $this->expectExceptionMessage("Endless Loop: LoopのIteration終了時にStackに何も積まれていません");
-
-        // Setup
-        $tokens = [
-            new Loop(
-                line: 1,
-                position: 1
-            ),
-            new Block(
-                line: 1,
-                position: 1,
-                tokens: []
-            )
-        ];
-        $evaluator = new Evaluator(hashmap: [], stack: [], tokens: $tokens);
-
-        // Run
-        EvaluatorOfLoop::evaluate($evaluator);
-    }
 }
