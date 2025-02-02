@@ -23,7 +23,7 @@ class EvaluatorOfLoop implements IEvaluator
         $e->dequeueToken();
         while (true) {
             // Blockが持つToken配列を取得
-            $token = end($e->token_queue);
+            $token = $e->token_queue[0];
 
             /** @var Block $token */
             $block = $e->validateToken(
@@ -37,11 +37,12 @@ class EvaluatorOfLoop implements IEvaluator
             // Blockを評価
             EvaluatorOfAlocasiaBlock::evaluate($e);
 
-            if (empty($e->stack)) continue;
-
             // Stack topが0ならbreak
-            if ($e->stack[0] instanceof AlocasiaObject) {
-                if ($e->stack[0]->value == 0) return $e;
+            if (end($e->stack) instanceof AlocasiaObject) {
+                if (end($e->stack)->value == 0) {
+                    $e->popItemFromStack(); // breakのために積まれた0を消す
+                    return $e;
+                }
             }
 
             array_unshift($e->token_queue, $block);
