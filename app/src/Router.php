@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Alocasia;
 
 use Alocasia\Controller\ControllerOfInterpretingFromFile;
+use Alocasia\Controller\ControllerOfInterpretingFromOneLineExpression;
+use Alocasia\Controller\ControllerOfInterpretingInteractively;
 use Alocasia\Controller\ControllerOfShowingHelpMessage;
 use Alocasia\Controller\IController;
-use Alocasia\Controller\ControllerOfInterpretingInteractively;
-use Alocasia\Controller\ControllerOfInterpretingFromOneLineExpression;
 
 readonly class Router
 {
@@ -22,9 +22,10 @@ readonly class Router
      * @param non-empty-array<int, string> $args
      */
     public function __construct(
-        int $numberOfArgs,
+        int   $numberOfArgs,
         array $args
-    ) {
+    )
+    {
         $this->numberOfArgs = $numberOfArgs;
         $this->args = $args;
     }
@@ -32,7 +33,8 @@ readonly class Router
     /**
      * @return IController
      */
-    public function route(): IController {
+    public function route(): IController
+    {
         return match ($this->numberOfArgs) {
             2 => match ($this->args[1]) {
                 "-i", "--interactive" => new ControllerOfInterpretingInteractively(),

@@ -43,7 +43,7 @@ class EvaluatorOfBuiltinFunction implements IEvaluator
             expectedStackedItemClass: AlocasiaObject::class,
             actualStackedItem: $stackedItem,
         );
-        print($alocasiaObject->value);
+        echo $alocasiaObject->value . "\n";
     }
 
     /**
