@@ -24,7 +24,6 @@ class EvaluatorOfLoop implements IEvaluator
         while (true) {
             // Blockが持つToken配列を取得
             $token = end($e->token_queue);
-            print_r($token);
 
             /** @var Block $token */
             $block = $e->validateToken(
