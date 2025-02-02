@@ -59,7 +59,7 @@ class EvaluatorOfVariableOperation implements IEvaluator
     private static function assign(Evaluator $e, Variable $token): void
     {
         // Equalを読み飛ばす: "=" は 人間用のかざり
-        array_shift($e->token_queue);
+        $e->dequeueToken();
         // Blockを展開, StackにAlocasiaBlockをpush
         EvaluatorOfCreatingAlocasiaBlock::evaluate($e);
         // Blockを解釈: AlocasiaBlockでない場合はevaluateAlocasiaBlockがErrorを投げる

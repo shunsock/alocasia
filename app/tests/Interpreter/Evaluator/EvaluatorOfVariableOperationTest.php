@@ -6,12 +6,14 @@ namespace Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\Evaluator;
 use Alocasia\Interpreter\Evaluator\EvaluatorException;
+use Alocasia\Interpreter\Evaluator\EvaluatorOfAlocasiaBlock;
 use Alocasia\Interpreter\Evaluator\EvaluatorOfVariableOperation;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObject;
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaObject\AlocasiaObjectType;
 use Alocasia\Interpreter\Token\Block;
 use Alocasia\Interpreter\Token\Equal;
 use Alocasia\Interpreter\Token\IntegerLiteral;
+use Alocasia\Interpreter\Token\Plus;
 use Alocasia\Interpreter\Token\Variable;
 use PHPUnit\Framework\TestCase;
 
