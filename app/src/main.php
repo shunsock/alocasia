@@ -6,8 +6,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Alocasia\Cli;
 use Alocasia\Router;
 
-print_r($argv);
-
 $router = new Router(
     /** @var int $argc */
     numberOfArgs: $argc,

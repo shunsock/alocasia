@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Alocasia;
 
-use Alocasia\Controller\FileController;
-use Alocasia\Controller\HelpMessageController;
+use Alocasia\Controller\ControllerOfInterpretingFromFile;
+use Alocasia\Controller\ControllerOfShowingHelpMessage;
 use Alocasia\Controller\IController;
-use Alocasia\Controller\InteractiveController;
-use Alocasia\Controller\OneLinerController;
+use Alocasia\Controller\ControllerOfInterpretingInteractively;
+use Alocasia\Controller\ControllerOfInterpretingFromOneLineExpression;
 
 readonly class Router
 {
@@ -35,15 +35,15 @@ readonly class Router
     public function route(): IController {
         return match ($this->numberOfArgs) {
             2 => match ($this->args[1]) {
-                "-i", "--interactive" => new InteractiveController(),
-                '-h', '--help' => new HelpMessageController(),
-                default => new FileController(file_path: $this->args[1]),
+                "-i", "--interactive" => new ControllerOfInterpretingInteractively(),
+                '-h', '--help' => new ControllerOfShowingHelpMessage(),
+                default => new ControllerOfInterpretingFromFile(file_path: $this->args[1]),
             },
             3 => match ($this->args[1]) {
-                "-o", "--oneliner" => new OnelinerController(src: $this->args[2]),
-                default => new HelpMessageController(),
+                "-o", "--oneliner" => new ControllerOfInterpretingFromOneLineExpression(src: $this->args[2]),
+                default => new ControllerOfShowingHelpMessage(),
             },
-            default => new HelpMessageController(),
+            default => new ControllerOfShowingHelpMessage(),
         };
     }
 }
