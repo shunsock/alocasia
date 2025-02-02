@@ -15,7 +15,7 @@
         phpWithExtensions = pkgs.php83.withExtensions (extensions: with extensions.all; [ mbstring ctype dom tokenizer xmlwriter pcntl ]);
 
         # vendor を生成するための derivation
-        myAppDerivation = pkgs.stdenv.mkDerivation {
+        alocasiaDerivation = pkgs.stdenv.mkDerivation {
           pname = "alocasia";
           version = "1.0.0";
           src = self;
@@ -33,15 +33,15 @@
 
         # 実行用のラッパースクリプトを作成
         appScript = pkgs.writeShellScriptBin "alocasia" ''
-          exec ${phpWithExtensions}/bin/php ${myAppDerivation}/app/src/main.php "$@"
+          exec ${phpWithExtensions}/bin/php ${alocasiaDerivation}/app/src/main.php "$@"
         '';
       in {
         packages = {
-          myApp = appScript;
+          alocasia = appScript;
         };
 
         apps = {
-          myApp = {
+          alocasia = {
             type = "app";
             program = "${appScript}/bin/alocasia";
           };

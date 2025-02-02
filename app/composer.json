@@ -16,8 +16,7 @@
     ],
     "require": {
         "ext-mbstring": "*",
-        "ext-ctype": "*",
-        "ext-pcntl": "*"
+        "ext-ctype": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5"
