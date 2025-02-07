@@ -114,7 +114,7 @@ class EvaluatorOfAlocasiaBlockTest extends TestCase
                 value: 10,
             )
         ];
-        $stack = [
+        $token = [
             new Variable(
                 line: 1,
                 position: 1,
