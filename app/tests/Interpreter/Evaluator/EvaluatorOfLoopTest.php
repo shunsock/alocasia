@@ -41,11 +41,7 @@ class EvaluatorOfLoopTest extends TestCase
         $evaluator = EvaluatorOfLoop::evaluate($evaluator);
 
         // Assert
-        // Stackの要素数は 1
-        $this->assertCount(1, $evaluator->stack);
-        // Stackの要素は AlocasiaObject(type: AlocasiaObjectType::FLOAT, value: 1.0)
-        $this->assertInstanceOf(AlocasiaObject::class, $evaluator->stack[0]);
-        $this->assertEquals(AlocasiaObjectType::INTEGER, $evaluator->stack[0]->type);
-        $this->assertEquals(0, $evaluator->stack[0]->value);
+        // Stackの要素数は 0 (LoopがBlockの評価終了時にStack topを参照するため)
+        $this->assertCount(0, $evaluator->stack);
     }
 }

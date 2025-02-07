@@ -31,6 +31,7 @@ class ControllerOfInterpretingInteractively implements IController
             }
 
             $scanner = new Scanner($userInput);
+            $tokens = [];
             try {
                 $tokens = $scanner->scan();
             } catch (ScannerException $e) {
