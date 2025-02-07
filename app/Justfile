@@ -1,5 +1,0 @@
-validate:
-    phpstan analyse -c phpstan.neon
-
-run +args:
-    php src/main.php {{args}}

@@ -26,7 +26,7 @@ jobs:
 
       - name: Run PHPStan
         working-directory: app
-        run: vendor/bin/phpstan analyse --configuration=phpstan.neon
+        run: vendor/bin/phpstan analyse -c phpstan.neon
 
       - name: Run PHPUnit tests
         working-directory: app
