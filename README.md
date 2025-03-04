@@ -81,7 +81,7 @@ loop { if { y 5 == } { 0 } { y = { y 1 + } 1 } }
 # Hello World
 ```
 
-詳細を確認したい場合は![ドキュメント](./document/syntax.md)を参照してください。
+詳細を確認したい場合は[ドキュメント](./document/syntax.md)を参照してください。
 
 ## ライセンス
 
