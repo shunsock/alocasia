@@ -47,7 +47,7 @@ class Scanner
         $buffer = '';
         $characters = mb_str_split($this->source);
 
-        while (!empty($characters)) {
+        while (empty($characters)) {
 
             $firstCharacter = array_shift($characters);
 
