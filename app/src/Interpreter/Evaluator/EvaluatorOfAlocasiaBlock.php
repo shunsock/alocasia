@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alocasia\Interpreter\Evaluator;
 
 use Alocasia\Interpreter\Evaluator\StackedItem\AlocasiaBlock\AlocasiaBlock;

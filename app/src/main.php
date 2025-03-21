@@ -9,7 +9,7 @@ use Alocasia\Router;
 $router = new Router(
     /** @var int $argc */
     numberOfArgs: $argc,
-    /** @var non-empty-array<int, string> $argv */
+    /** @var string[] $argv */
     args: $argv
 );
 
