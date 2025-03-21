@@ -25,6 +25,11 @@ $ ./result/bin/alocasia ./document/example.aloc
 3.14
 0
 1
+1
+2
+3
+4
+5
 Hello World
 ```
 
@@ -75,7 +80,12 @@ if { 1 } { 1 print } { 0 print }
 # 1
 
 y = { 0 }
-loop { if { y 5 == } { 0 } { y = { y 1 + } 1 } }
+loop { if { y 5 == } { 0 } { y = { y 1 + } y print } }
+# 1
+# 2
+# 3
+# 4
+# 5
 
 100 108 114 111 87 32 111 108 108 101 72 11 print_ascii_str
 # Hello World
