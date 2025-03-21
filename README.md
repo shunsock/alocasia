@@ -80,7 +80,7 @@ if { 1 } { 1 print } { 0 print }
 # 1
 
 y = { 0 }
-loop { if { y 5 == } { 0 } { y = { y 1 + } y print 1 } }
+loop { if { y 5 == } { 0 } { y = { y 1 + } y print } }
 # 1
 # 2
 # 3
