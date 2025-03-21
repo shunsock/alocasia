@@ -187,18 +187,7 @@ class Scanner
             }
             // identifier: 関数名・制御構文
             if (ctype_alpha($firstCharacter)) {
-                while (preg_match('/[a-zA-Z_]/', $firstCharacter)) {
-                    $buffer .= $firstCharacter;
-                    $isSpace = isset($characters[0]) && trim($characters[0]) === "";
-                    if ($isSpace || count($characters) === 0) {
-                        $tokens[] = $this->identifyToken($buffer);
-                        // bufferをクリア
-                        $buffer = '';
-                        break;
-                    }
-                    $this->position++;
-                    $firstCharacter = array_shift($characters);
-                }
+                $tokens[] = $this->scanIdentifier($firstCharacter, $characters);
                 continue;
             }
             throw new ScannerException(
@@ -258,6 +247,37 @@ class Scanner
                 (int)$buffer
             );
         }
+    }
+
+    /**
+     * 識別子（関数名・制御構文・変数名）の走査処理を共通化する
+     *
+     * @param string $initialBuffer 初期バッファ（既に1文字分の識別子の先頭が入っている）
+     * @param string[] &$characters 残りの文字列配列（参照渡し）
+     * @return Token 識別子に対応する Token（BuiltinFunction、ConditionalBranch、Loop、Variable など）
+     * @throws ScannerException
+     */
+    private function scanIdentifier(string $initialBuffer, array &$characters): Token {
+        $buffer = $initialBuffer;
+
+        while (!empty($characters)) {
+            $next = $characters[0];
+
+            // 空白にぶつかった場合はトークンの区切りとみなす
+            if (trim($next) === "") {
+                break;
+            }
+
+            // 識別子として許容するのはアルファベットとアンダースコアのみ
+            if (!preg_match('/[a-zA-Z_]/', $next)) {
+                break;
+            }
+
+            $buffer .= array_shift($characters);
+            $this->position++;
+        }
+
+        return $this->identifyToken($buffer);
     }
 
 
