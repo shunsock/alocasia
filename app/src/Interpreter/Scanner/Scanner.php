@@ -22,7 +22,6 @@ use Alocasia\Interpreter\Token\RightBrace;
 use Alocasia\Interpreter\Token\Slash;
 use Alocasia\Interpreter\Token\Token;
 use Alocasia\Interpreter\Token\Variable;
-use TheSeer\Tokenizer\NamespaceUri;
 
 class Scanner
 {
@@ -170,7 +169,7 @@ class Scanner
                     // - 文字の処理
                     $this->position++;
                     // - に続く数字の処理
-                    $tokens[] = $this->parseNumber('-', $characters);
+                    $tokens[] = $this->scanNumber('-', $characters);
                 } else {
                     throw new ScannerException(
                         source_code_line: $this->line,
@@ -183,7 +182,7 @@ class Scanner
             // PositiveNumber: 0, 1, 3.14
             if (ctype_digit($firstCharacter)) {
                 // すでに最初の数字をバッファに入れておく
-                $tokens[] = $this->parseNumber($firstCharacter, $characters);
+                $tokens[] = $this->scanNumber($firstCharacter, $characters);
                 continue;
             }
             // identifier: 関数名・制御構文
@@ -219,7 +218,7 @@ class Scanner
      * @return Token IntegerLiteral or FloatLiteral
      * @throws ScannerException
      */
-    private function parseNumber(string $initialBuffer, array &$characters): token {
+    private function scanNumber(string $initialBuffer, array &$characters): token {
         $buffer = $initialBuffer;
         $isFloat = false;
 
