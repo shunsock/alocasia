@@ -22,6 +22,7 @@ use Alocasia\Interpreter\Token\RightBrace;
 use Alocasia\Interpreter\Token\Slash;
 use Alocasia\Interpreter\Token\Token;
 use Alocasia\Interpreter\Token\Variable;
+use TheSeer\Tokenizer\NamespaceUri;
 
 class Scanner
 {
@@ -47,7 +48,7 @@ class Scanner
         $buffer = '';
         $characters = mb_str_split($this->source);
 
-        while (empty($characters)) {
+        while (!empty($characters)) {
 
             $firstCharacter = array_shift($characters);
 
@@ -157,7 +158,6 @@ class Scanner
                 $this->position += 2;
                 continue;
             }
-            // たくさん見ないとわからない
             // NegativeNumber: -1, -3.14
             if ($firstCharacter === '-') {
                 $nextCharacter = $characters[0];
@@ -168,48 +168,9 @@ class Scanner
                     );
                 } else if (ctype_digit($nextCharacter)) {
                     // - 文字の処理
-                    $buffer .= $firstCharacter;
                     $this->position++;
                     // - に続く数字の処理
-                    $isFloat = false;
-                    $firstCharacter = array_shift($characters);
-                    while (true) {
-                        if (!ctype_digit($firstCharacter) && $firstCharacter != '.') {
-                            throw new ScannerException(
-                                source_code_line: $this->line,
-                                source_code_position: $this->position,
-                                message: "数値リテラルに予期しない文字が読み込まれました. 読み込まれた文字: " . $firstCharacter
-                            );
-                        }
-
-                        $buffer .= $firstCharacter;
-
-                        if ($firstCharacter === '.') {
-                            $isFloat = true;
-                        }
-
-                        $isSpace = isset($characters[0]) && trim($characters[0]) === "";
-                        if ($isSpace || count($characters) === 0) {
-                            if ($isFloat) {
-                                $tokens[] = new FloatLiteral(
-                                    $this->line,
-                                    $this->position,
-                                    (float)$buffer
-                                );
-                            } else {
-                                $tokens[] = new IntegerLiteral(
-                                    $this->line,
-                                    $this->position,
-                                    (integer)$buffer
-                                );
-                            }
-                            // bufferをクリア
-                            $buffer = '';
-                            break;
-                        }
-                        $this->position++;
-                        $firstCharacter = array_shift($characters);
-                    }
+                    $tokens[] = $this->parseNumber('-', $characters);
                 } else {
                     throw new ScannerException(
                         source_code_line: $this->line,
@@ -221,44 +182,8 @@ class Scanner
             }
             // PositiveNumber: 0, 1, 3.14
             if (ctype_digit($firstCharacter)) {
-                $isFloat = false;
-                while (true) {
-                    // bufferに追加しても問題ないかチェック
-                    if (!ctype_digit($firstCharacter) && $firstCharacter != '.') {
-                        throw new ScannerException(
-                            source_code_line: $this->line,
-                            source_code_position: $this->position,
-                            message: "数値リテラルに予期しない文字が読み込まれました. 読み込まれた文字: " . $firstCharacter
-                        );
-                    }
-                    $buffer .= $firstCharacter;
-
-                    if ($firstCharacter === '.') {
-                        $isFloat = true;
-                    }
-                    // スペースか最終文字
-                    $isSpace = isset($characters[0]) && trim($characters[0]) === "";
-                    if ($isSpace || count($characters) === 0) {
-                        if ($isFloat) {
-                            $tokens[] = new FloatLiteral(
-                                $this->line,
-                                $this->position,
-                                (float)$buffer
-                            );
-                        } else {
-                            $tokens[] = new IntegerLiteral(
-                                $this->line,
-                                $this->position,
-                                (integer)$buffer
-                            );
-                        }
-                        // bufferをクリア
-                        $buffer = '';
-                        break;
-                    }
-                    $this->position++;
-                    $firstCharacter = array_shift($characters);
-                }
+                // すでに最初の数字をバッファに入れておく
+                $tokens[] = $this->parseNumber($firstCharacter, $characters);
                 continue;
             }
             // identifier: 関数名・制御構文
@@ -285,6 +210,57 @@ class Scanner
         }
         return $tokens;
     }
+
+    /**
+     * 数値リテラル（正負両方）の処理を共通化する
+     *
+     * @param string $initialBuffer 初期バッファ（符号を含む場合もある）
+     * @param string[] &$characters 残りの文字列配列（参照渡し）
+     * @return Token IntegerLiteral or FloatLiteral
+     * @throws ScannerException
+     */
+    private function parseNumber(string $initialBuffer, array &$characters): token {
+        $buffer = $initialBuffer;
+        $isFloat = false;
+
+        while (!empty($characters)) {
+            // 次の文字を覗く
+            $next = $characters[0];
+            // 空白が来たら、トークンの境界とみなす
+            if (trim($next) === "") {
+                break;
+            }
+            // 数字またはドット以外が来た場合はエラー
+            if (!ctype_digit($next) && $next !== '.') {
+                throw new ScannerException(
+                    source_code_line: $this->line,
+                    source_code_position: $this->position,
+                    message: "数値リテラルに予期しない文字が読み込まれました. 読み込まれた文字: " . $next
+                );
+            }
+            // 消費してバッファに追加
+            $buffer .= array_shift($characters);
+            if ($next === '.') {
+                $isFloat = true;
+            }
+            $this->position++;
+        }
+
+        if ($isFloat) {
+            return new FloatLiteral(
+                $this->line,
+                $this->position,
+                (float)$buffer
+            );
+        } else {
+            return new IntegerLiteral(
+                $this->line,
+                $this->position,
+                (int)$buffer
+            );
+        }
+    }
+
 
     /**
      * @throws ScannerException
