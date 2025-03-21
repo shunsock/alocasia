@@ -39,7 +39,7 @@ class Scanner
     }
 
     /**
-     * @return list<Token>
+     * @return Token[]
      * @throws ScannerException
      */
     public function scan(): array {
