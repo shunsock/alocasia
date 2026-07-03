@@ -207,7 +207,7 @@ class Scanner
      * @return Token IntegerLiteral or FloatLiteral
      * @throws ScannerException
      */
-    private function scanNumber(string $initialBuffer, array &$characters): token {
+    private function scanNumber(string $initialBuffer, array &$characters): Token {
         $buffer = $initialBuffer;
         $isFloat = false;
 
